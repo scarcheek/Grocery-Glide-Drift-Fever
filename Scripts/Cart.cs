@@ -22,7 +22,7 @@ public partial class Cart : RigidBody3D
 		float weightPenalty = 1-weight/100;
 		if(Input.IsActionPressed("forward")){
 			ApplyForce(GlobalTransform.Basis.Z*thrust*weightPenalty, CenterOfMass);
-			Debug.WriteLine("thrust");
+			// Debug.WriteLine("thrust");
 		}
 		if (Input.IsActionPressed("steer_r")){
 			ApplyTorque(GlobalTransform.Basis.Y*-angular*weightPenalty);
@@ -31,12 +31,6 @@ public partial class Cart : RigidBody3D
 			ApplyTorque(GlobalTransform.Basis.Y*angular*weightPenalty);
 		}
 
-
-		// foreach (MeshInstance3D wheel in wheels){
-		// 	if (LinearVelocity.Length() > 0.1){
-		// 		wheel.LookAt(wheel.GlobalPosition + new Godot.Vector3(LinearVelocity.X, 0, LinearVelocity.Z));
-				
-		// 	}
-		// }
+		
 	}
 }

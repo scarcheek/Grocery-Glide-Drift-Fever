@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://tfouulew7ry6"]
+[gd_scene load_steps=4 format=3 uid="uid://tfouulew7ry6"]
 
 [ext_resource type="Script" path="res://Scripts/Wheel.cs" id="1_fqk52"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0tucu"]
 size = Vector3(0.25, 0.4, 0.5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1cfey"]
+
 [node name="Wheel" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, -0.658979, -1.57238, 0.891161)
 mesh = SubResource("BoxMesh_0tucu")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_1cfey")
 script = ExtResource("1_fqk52")
