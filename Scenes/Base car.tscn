@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://6hf3yxwah21o"]
+
+[ext_resource type="Script" path="res://Scripts/BaseCart.cs" id="1_issxc"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gwfyo"]
+
+[sub_resource type="BoxMesh" id="1"]
+size = Vector3(1.918, 1.103, 3.019)
+
+[sub_resource type="ConvexPolygonShape3D" id="3"]
+points = PackedVector3Array(-0.944614, -0.5515, -1.47555, 0.946613, 0.5515, 1.47949, -0.94714, 0.5515, 1.47949, 0.946613, 0.5515, -1.47949, 0.944087, -0.5515, 1.47555, -0.94714, 0.5515, -1.47949, -0.944614, -0.5515, 1.47555, 0.944087, -0.5515, -1.47555)
+
+[sub_resource type="CylinderMesh" id="2"]
+height = 0.2
+
+[node name="Base car" type="Node3D"]
+
+[node name="VehicleBody3D" type="VehicleBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_gwfyo")
+script = ExtResource("1_issxc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D"]
+mesh = SubResource("1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleBody3D"]
+shape = SubResource("3")
+
+[node name="front_r" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12432, -0.522573, 1.47271)
+use_as_steering = true
+suspension_stiffness = 100.0
+damping_compression = 0.5
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="VehicleBody3D/front_r"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("2")
+
+[node name="front_l" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12432, -0.522573, 1.47271)
+use_as_steering = true
+suspension_stiffness = 100.0
+damping_compression = 0.5
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="VehicleBody3D/front_l"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("2")
+
+[node name="back_r" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12432, -0.522573, -1.3381)
+use_as_traction = true
+suspension_stiffness = 100.0
+damping_compression = 0.5
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="VehicleBody3D/back_r"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("2")
+
+[node name="back_l" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12432, -0.522573, -1.3381)
+use_as_traction = true
+suspension_stiffness = 100.0
+damping_compression = 0.5
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="VehicleBody3D/back_l"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("2")
+
+[node name="Camera3D" type="Camera3D" parent="VehicleBody3D"]
+transform = Transform3D(-1, -7.6194e-09, 8.70901e-08, 0, 0.996195, 0.0871557, -8.74228e-08, 0.0871557, -0.996195, 0, 1.00486, -8.88779)
+projection = 1
+size = 10.8

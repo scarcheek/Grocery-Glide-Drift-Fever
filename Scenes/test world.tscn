@@ -1,0 +1,103 @@
+[gd_scene load_steps=15 format=3 uid="uid://oss3r33xipk7"]
+
+[ext_resource type="Script" path="res://Scripts/Cart.cs" id="1_5j27s"]
+[ext_resource type="PhysicsMaterial" uid="uid://dwqwcitncrxt5" path="res://physics materials/slippery.tres" id="1_qqs24"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p5emg"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_h8ywe"]
+sky_material = SubResource("ProceduralSkyMaterial_p5emg")
+
+[sub_resource type="Environment" id="Environment_deu3j"]
+background_mode = 2
+sky = SubResource("Sky_h8ywe")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="1"]
+size = Vector2(120, 120)
+
+[sub_resource type="Gradient" id="Gradient_37skc"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5d7y1"]
+noise_type = 5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_socxw"]
+color_ramp = SubResource("Gradient_37skc")
+noise = SubResource("FastNoiseLite_5d7y1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1o62k"]
+albedo_color = Color(0.121569, 1, 1, 1)
+albedo_texture = SubResource("NoiseTexture2D_socxw")
+
+[sub_resource type="BoxShape3D" id="2"]
+size = Vector3(120, 2, 120)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3qd0o"]
+size = Vector3(1.6, 2.66, 2.34)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2arj1"]
+points = PackedVector3Array(-0.8, -1.77, -1.161, 0.8, 1.30917, 1.13641, 0.8, 1.30917, -1.15419, -0.8, 1.31647, 1.14279, 0.8, -1.77, 1.136, -0.8, 1.31647, -1.16057, -0.8, -1.77, 1.143, 0.8, -1.77, -1.154)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0tucu"]
+size = Vector3(0.25, 0.4, 0.5)
+
+[node name="test world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_deu3j")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.018412, -0.865879, 0.499915, 0, 0.5, 0.866025, -0.99983, 0.0159452, -0.00920598, 8.93156, 19, 0)
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("1")
+material = SubResource("StandardMaterial3D_1o62k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("2")
+
+[node name="Cart" type="RigidBody3D" parent="." node_paths=PackedStringArray("wheels")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.6184, 0)
+disable_mode = 2
+mass = 50.0
+physics_material_override = ExtResource("1_qqs24")
+script = ExtResource("1_5j27s")
+wheels = [NodePath("Wheel"), NodePath("Wheel2"), NodePath("Wheel3"), NodePath("Wheel4")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cart"]
+transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0, 0)
+mesh = SubResource("BoxMesh_3qd0o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cart"]
+transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_2arj1")
+
+[node name="Wheel" type="MeshInstance3D" parent="Cart"]
+transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, -0.658979, -1.57238, 0.891161)
+mesh = SubResource("BoxMesh_0tucu")
+skeleton = NodePath("../..")
+
+[node name="Wheel2" type="MeshInstance3D" parent="Cart"]
+transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, 0.651491, -1.57238, 0.891162)
+mesh = SubResource("BoxMesh_0tucu")
+skeleton = NodePath("../..")
+
+[node name="Wheel3" type="MeshInstance3D" parent="Cart"]
+transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, -0.658979, -1.57238, -0.898564)
+mesh = SubResource("BoxMesh_0tucu")
+skeleton = NodePath("../..")
+
+[node name="Wheel4" type="MeshInstance3D" parent="Cart"]
+transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, 0.651491, -1.57238, -0.898564)
+mesh = SubResource("BoxMesh_0tucu")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="Cart"]
+transform = Transform3D(-1, -2.59464e-08, 8.34837e-08, 0, 0.954942, 0.296792, -8.74228e-08, 0.296792, -0.954942, 4.47482e-07, 2.02895, -5.1186)
