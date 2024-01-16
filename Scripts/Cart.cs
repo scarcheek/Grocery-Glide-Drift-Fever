@@ -32,10 +32,11 @@ public partial class Cart : RigidBody3D
 		}
 
 
-		foreach (MeshInstance3D wheel in wheels){
-			if (LinearVelocity.Length() > 0.1){
-				wheel.LookAt(wheel.GlobalPosition + new Godot.Vector3(LinearVelocity.X, 0, LinearVelocity.Z));
-			}
-		}
+		// foreach (MeshInstance3D wheel in wheels){
+		// 	if (LinearVelocity.Length() > 0.1){
+		// 		wheel.LookAt(wheel.GlobalPosition + new Godot.Vector3(LinearVelocity.X, 0, LinearVelocity.Z));
+				
+		// 	}
+		// }
 	}
 }

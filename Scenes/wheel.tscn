@@ -1,11 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://tfouulew7ry6"]
+[gd_scene load_steps=3 format=3 uid="uid://tfouulew7ry6"]
 
-[ext_resource type="PhysicsMaterial" uid="uid://dwqwcitncrxt5" path="res://physics materials/slippery.tres" id="1_qmvsj"]
+[ext_resource type="Script" path="res://Scripts/Wheel.cs" id="1_fqk52"]
 
-[node name="ConeTwistJoint3D" type="ConeTwistJoint3D"]
-node_b = NodePath("Wheel")
+[sub_resource type="BoxMesh" id="BoxMesh_0tucu"]
+size = Vector3(0.25, 0.4, 0.5)
 
-[node name="Wheel" type="RigidBody3D" parent="."]
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-physics_material_override = ExtResource("1_qmvsj")
+[node name="Wheel" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, -0.658979, -1.57238, 0.891161)
+mesh = SubResource("BoxMesh_0tucu")
+skeleton = NodePath("../..")
+script = ExtResource("1_fqk52")
