@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://Scripts/Wheel.cs" id="1_fqk52"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_0tucu"]
-size = Vector3(0.25, 0.4, 0.5)
+[sub_resource type="BoxMesh" id="BoxMesh_d1wvs"]
+size = Vector3(0.09, 0.11, 0.1)
 
 [node name="Wheel" type="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, -0.658979, -1.57238, 0.891161)
-mesh = SubResource("BoxMesh_0tucu")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
+mesh = SubResource("BoxMesh_d1wvs")
 skeleton = NodePath("../..")
 script = ExtResource("1_fqk52")

@@ -34,13 +34,13 @@ albedo_color = Color(0.121569, 1, 1, 1)
 albedo_texture = SubResource("NoiseTexture2D_socxw")
 
 [sub_resource type="BoxShape3D" id="2"]
-size = Vector3(120, 2, 120)
+size = Vector3(120, 2, 202)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3qd0o"]
-size = Vector3(1.6, 2.66, 2.34)
+size = Vector3(0.6, 0.85, 1.1)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2arj1"]
-points = PackedVector3Array(-0.8, -1.77, -1.161, 0.8, 1.30917, 1.13641, 0.8, 1.30917, -1.15419, -0.8, 1.31647, 1.14279, 0.8, -1.77, 1.136, -0.8, 1.31647, -1.16057, -0.8, -1.77, 1.143, 0.8, -1.77, -1.154)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pdpqd"]
+points = PackedVector3Array(0.3, 0.5, 0.55, -0.3, -0.5, -0.55, 0.3, -0.5, -0.55, 0.3, 0.5, -0.55, 0.3, -0.5, 0.55, -0.3, 0.5, 0.55, -0.3, -0.5, 0.55, -0.3, 0.5, -0.55)
 
 [node name="test world" type="Node3D"]
 
@@ -59,34 +59,36 @@ mesh = SubResource("1")
 material = SubResource("StandardMaterial3D_1o62k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -4.02934, -90)
 shape = SubResource("2")
 
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 5.18929e-08, -1.66968e-07, 0, 0.954942, 0.296792, 1.74846e-07, -0.296792, 0.954942, -8.94964e-07, 2.87488, 2.95854)
+
 [node name="Cart" type="RigidBody3D" parent="." node_paths=PackedStringArray("wheels")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 5.6184, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.88809, 0)
 disable_mode = 2
-mass = 50.0
+mass = 26.0
 physics_material_override = ExtResource("1_qqs24")
 script = ExtResource("1_5j27s")
 wheels = [null, null, null, null]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cart"]
-transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0, 0)
+transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0.039, 0)
 mesh = SubResource("BoxMesh_3qd0o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cart"]
-transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_2arj1")
+transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_pdpqd")
 
-[node name="WheelFR" parent="Cart" instance=ExtResource("3_4d6fo")]
+[node name="Wheel" parent="Cart" instance=ExtResource("3_4d6fo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.254238, -0.444, 0.50078)
 
-[node name="WheelFL" parent="Cart" instance=ExtResource("3_4d6fo")]
-transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, 0.651491, -1.57238, 0.891162)
+[node name="Wheel2" parent="Cart" instance=ExtResource("3_4d6fo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.254238, -0.444, -0.498831)
 
-[node name="WheelBR" parent="Cart" instance=ExtResource("3_4d6fo")]
-transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, -0.658979, -1.57238, -0.898564)
+[node name="Wheel3" parent="Cart" instance=ExtResource("3_4d6fo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.251606, -0.444, 0.50078)
 
-[node name="WheelBL" parent="Cart" instance=ExtResource("3_4d6fo")]
-transform = Transform3D(1, 0, 0, 0, 0.99911, 0.0421895, 0, -0.0421895, 0.999109, 0.651491, -1.57238, -0.898564)
-
-[node name="Camera3D" type="Camera3D" parent="Cart"]
-transform = Transform3D(-1, -2.59464e-08, 8.34837e-08, 0, 0.954942, 0.296792, -8.74228e-08, 0.296792, -0.954942, 4.47482e-07, 2.02895, -5.1186)
+[node name="Wheel4" parent="Cart" instance=ExtResource("3_4d6fo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.251606, -0.444, -0.498832)
