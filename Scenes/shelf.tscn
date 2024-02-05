@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmnxmb141f2v3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7oudi"]
+friction = 0.0
+bounce = 0.14
+
+[sub_resource type="BoxMesh" id="BoxMesh_d6hcu"]
+size = Vector3(0.7, 2, 1.7)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ex8fr"]
+points = PackedVector3Array(-0.35, -0.971704, -0.827915, 0.35, 0.976147, 0.846019, -0.35, 0.971704, 0.842201, 0.35, -0.976147, 0.846019, 0.35, 0.976147, -0.831733, 0.35, -0.976147, -0.831733, -0.35, -0.971704, 0.842201, -0.35, 0.971704, -0.827915)
+
+[node name="shelf" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.52949, 1.99103, 0)
+physics_material_override = SubResource("PhysicsMaterial_7oudi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_d6hcu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_ex8fr")

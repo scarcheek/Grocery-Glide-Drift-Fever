@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgq6ixctkuawe"]
+
+[ext_resource type="Script" path="res://Scripts/thirdPersonCam.cs" id="1_kkqki"]
+
+[node name="thirdPersonCam" type="Camera3D" node_paths=PackedStringArray("Cart")]
+transform = Transform3D(1, 5.18929e-08, -1.66968e-07, 0, 0.954942, 0.296792, 1.74846e-07, -0.296792, 0.954942, -8.94964e-07, 2.87488, 2.95854)
+script = ExtResource("1_kkqki")
+Cart = NodePath("")
+dist = 3.0
+height = 1.0

@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmd677ycvk3to"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://dwqwcitncrxt5" path="res://physics materials/slippery.tres" id="1_e3lua"]
+[ext_resource type="Script" path="res://Scripts/Cart.cs" id="2_mfh7l"]
+[ext_resource type="PhysicsMaterial" uid="uid://vnwm8hjlh2we" path="res://physics materials/ragdoll.tres" id="3_5cvuw"]
+[ext_resource type="PackedScene" uid="uid://c34gkcdqvnydm" path="res://Assets/3DModels/shopping cart.glb" id="4_orx5b"]
+[ext_resource type="PackedScene" uid="uid://tfouulew7ry6" path="res://Scenes/wheel.tscn" id="5_moa8g"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pdpqd"]
+points = PackedVector3Array(0.3, 0.5, 0.55, -0.3, -0.5, -0.55, 0.3, -0.5, -0.55, 0.3, 0.5, -0.55, 0.3, -0.5, 0.55, -0.3, 0.5, 0.55, -0.3, -0.5, 0.55, -0.3, 0.5, -0.55)
+
+[node name="Cart" type="RigidBody3D" node_paths=PackedStringArray("wheels")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.502414, 0)
+disable_mode = 2
+mass = 26.0
+physics_material_override = ExtResource("1_e3lua")
+script = ExtResource("2_mfh7l")
+wheels = [null, null, null, null]
+slipperyMaterial = ExtResource("1_e3lua")
+ragdollMaterial = ExtResource("3_5cvuw")
+weight = 0
+
+[node name="shopping cart" parent="." instance=ExtResource("4_orx5b")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.498087, 0.145)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0.00491333, 0)
+shape = SubResource("ConvexPolygonShape3D_pdpqd")
+
+[node name="Wheel" parent="." instance=ExtResource("5_moa8g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.185006, -0.439087, 0.324695)
+
+[node name="Wheel2" parent="." instance=ExtResource("5_moa8g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.185006, -0.439087, -0.208623)
+
+[node name="Wheel3" parent="." instance=ExtResource("5_moa8g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.182374, -0.439087, 0.324695)
+
+[node name="Wheel4" parent="." instance=ExtResource("5_moa8g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.182374, -0.439087, -0.208624)

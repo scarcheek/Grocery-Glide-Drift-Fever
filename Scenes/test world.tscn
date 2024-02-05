@@ -1,8 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://oss3r33xipk7"]
+[gd_scene load_steps=13 format=3 uid="uid://oss3r33xipk7"]
 
-[ext_resource type="Script" path="res://Scripts/Cart.cs" id="1_5j27s"]
-[ext_resource type="PhysicsMaterial" uid="uid://dwqwcitncrxt5" path="res://physics materials/slippery.tres" id="1_qqs24"]
-[ext_resource type="PackedScene" uid="uid://tfouulew7ry6" path="res://Scenes/wheel.tscn" id="3_4d6fo"]
+[ext_resource type="PackedScene" uid="uid://bmnxmb141f2v3" path="res://Scenes/shelf.tscn" id="1_4w0b6"]
+[ext_resource type="PackedScene" uid="uid://dgq6ixctkuawe" path="res://Scenes/third_person_cam.tscn" id="1_hpi38"]
+[ext_resource type="PackedScene" uid="uid://bmd677ycvk3to" path="res://Scenes/cart.tscn" id="2_qdsev"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p5emg"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -34,13 +34,7 @@ albedo_color = Color(0.121569, 1, 1, 1)
 albedo_texture = SubResource("NoiseTexture2D_socxw")
 
 [sub_resource type="BoxShape3D" id="2"]
-size = Vector3(120, 2, 202)
-
-[sub_resource type="BoxMesh" id="BoxMesh_3qd0o"]
-size = Vector3(0.6, 0.85, 1.1)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pdpqd"]
-points = PackedVector3Array(0.3, 0.5, 0.55, -0.3, -0.5, -0.55, 0.3, -0.5, -0.55, 0.3, 0.5, -0.55, 0.3, -0.5, 0.55, -0.3, 0.5, 0.55, -0.3, -0.5, 0.55, -0.3, 0.5, -0.55)
+size = Vector3(120, 0.1, 120)
 
 [node name="test world" type="Node3D"]
 
@@ -48,47 +42,534 @@ points = PackedVector3Array(0.3, 0.5, 0.55, -0.3, -0.5, -0.55, 0.3, -0.5, -0.55,
 environment = SubResource("Environment_deu3j")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.018412, -0.865879, 0.499915, 0, 0.5, 0.866025, -0.99983, 0.0159452, -0.00920598, 8.93156, 19, 0)
+transform = Transform3D(-0.018412, -0.865879, 0.499915, 0, 0.5, 0.866026, -0.99983, 0.0159453, -0.009206, 30.6859, 19, 0)
 shadow_enabled = true
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="floor" type="StaticBody3D" parent="."]
+metadata/_edit_lock_ = true
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("1")
 material = SubResource("StandardMaterial3D_1o62k")
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -4.02934, -90)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.952889, 0)
 shape = SubResource("2")
+metadata/_edit_lock_ = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 5.18929e-08, -1.66968e-07, 0, 0.954942, 0.296792, 1.74846e-07, -0.296792, 0.954942, -8.94964e-07, 2.87488, 2.95854)
+[node name="obstacles" type="Node3D" parent="."]
 
-[node name="Cart" type="RigidBody3D" parent="." node_paths=PackedStringArray("wheels")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.88809, 0)
-disable_mode = 2
-mass = 26.0
-physics_material_override = ExtResource("1_qqs24")
-script = ExtResource("1_5j27s")
-wheels = [null, null, null, null]
+[node name="shelf" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Cart"]
-transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0.039, 0)
-mesh = SubResource("BoxMesh_3qd0o")
+[node name="shelf2" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -1.71558)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Cart"]
-transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_pdpqd")
+[node name="shelf3" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -3.4502)
 
-[node name="Wheel" parent="Cart" instance=ExtResource("3_4d6fo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.254238, -0.444, 0.50078)
+[node name="shelf4" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -5.1842)
 
-[node name="Wheel2" parent="Cart" instance=ExtResource("3_4d6fo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.254238, -0.444, -0.498831)
+[node name="shelf5" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -6.9278)
 
-[node name="Wheel3" parent="Cart" instance=ExtResource("3_4d6fo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.251606, -0.444, 0.50078)
+[node name="shelf6" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -8.7041)
 
-[node name="Wheel4" parent="Cart" instance=ExtResource("3_4d6fo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.251606, -0.444, -0.498832)
+[node name="shelf16" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -10.4656)
+
+[node name="shelf17" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -12.2419)
+
+[node name="shelf18" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, -14.0267)
+
+[node name="shelf12" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, 5.26007)
+
+[node name="shelf22" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, 3.52545)
+
+[node name="shelf23" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2838, 1.99103, 1.79144)
+
+[node name="shelf42" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 0)
+
+[node name="shelf43" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -1.71558)
+
+[node name="shelf44" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -3.4502)
+
+[node name="shelf45" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -5.1842)
+
+[node name="shelf46" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -6.9278)
+
+[node name="shelf47" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -8.7041)
+
+[node name="shelf48" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -10.4656)
+
+[node name="shelf49" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -12.2419)
+
+[node name="shelf50" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, -14.0267)
+
+[node name="shelf51" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 6.97565)
+
+[node name="shelf52" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 5.26007)
+
+[node name="shelf53" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 3.52545)
+
+[node name="shelf54" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 1.79144)
+
+[node name="shelf62" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 20.996)
+
+[node name="shelf85" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 19.2804)
+
+[node name="shelf86" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 17.5458)
+
+[node name="shelf94" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 15.8118)
+
+[node name="shelf95" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 14.0682)
+
+[node name="shelf96" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 12.2919)
+
+[node name="shelf97" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 10.5304)
+
+[node name="shelf98" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 8.75413)
+
+[node name="shelf99" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 27.9717)
+
+[node name="shelf100" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 26.2561)
+
+[node name="shelf101" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 24.5215)
+
+[node name="shelf102" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2341, 1.99103, 22.7875)
+
+[node name="shelf13" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 20.1911, 1.99103, -15.3879)
+
+[node name="shelf14" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 21.9347, 1.99103, -15.3761)
+
+[node name="shelf15" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 23.7109, 1.99103, -15.3641)
+
+[node name="shelf19" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 14.9128, 1.99103, -15.3879)
+
+[node name="shelf20" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 16.6564, 1.99103, -15.3761)
+
+[node name="shelf28" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 3.42467, 1.99103, -3.15975)
+
+[node name="shelf29" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 5.16822, 1.99103, -3.14801)
+
+[node name="shelf30" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 3.42467, 1.99103, 4.40551)
+
+[node name="shelf31" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 5.16822, 1.99103, 4.41725)
+
+[node name="shelf32" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 2.28184, 1.99103, 3.28251)
+
+[node name="shelf33" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 2.2812, 1.99103, -1.99639)
+
+[node name="shelf34" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 6.31169, 1.99103, 3.25388)
+
+[node name="shelf35" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 6.31105, 1.99103, -2.02501)
+
+[node name="shelf60" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 2.2812, 1.99103, -0.209309)
+
+[node name="shelf63" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 6.31105, 1.99103, -0.237936)
+
+[node name="shelf64" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 2.2812, 1.99103, 1.53892)
+
+[node name="shelf65" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 6.31105, 1.99103, 1.51029)
+
+[node name="shelf66" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -14.2687, 1.99103, -3.15975)
+
+[node name="shelf67" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -12.5251, 1.99103, -3.14801)
+
+[node name="shelf68" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -14.2687, 1.99103, 4.40551)
+
+[node name="shelf69" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -12.5251, 1.99103, 4.41725)
+
+[node name="shelf70" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -15.4115, 1.99103, 3.28251)
+
+[node name="shelf71" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -15.4122, 1.99103, -1.99639)
+
+[node name="shelf72" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -11.3817, 1.99103, 3.25388)
+
+[node name="shelf73" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -11.3823, 1.99103, -2.02501)
+
+[node name="shelf74" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -15.4122, 1.99103, -0.209309)
+
+[node name="shelf75" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -11.3823, 1.99103, -0.237936)
+
+[node name="shelf76" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -15.4122, 1.99103, 1.53892)
+
+[node name="shelf77" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -11.3823, 1.99103, 1.51029)
+
+[node name="shelf103" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -5.93875, 1.99103, 10.4192)
+
+[node name="shelf104" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -4.1952, 1.99103, 10.4309)
+
+[node name="shelf107" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08158, 1.99103, 16.8615)
+
+[node name="shelf108" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 11.5826)
+
+[node name="shelf109" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05173, 1.99103, 16.8328)
+
+[node name="shelf110" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 11.5539)
+
+[node name="shelf111" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 13.3696)
+
+[node name="shelf112" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 13.341)
+
+[node name="shelf113" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 15.1179)
+
+[node name="shelf114" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 15.0892)
+
+[node name="shelf115" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08158, 1.99103, 22.2246)
+
+[node name="shelf116" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05173, 1.99103, 22.1959)
+
+[node name="shelf117" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 18.7327)
+
+[node name="shelf118" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 18.7041)
+
+[node name="shelf119" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 20.481)
+
+[node name="shelf120" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 20.4523)
+
+[node name="shelf121" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08158, 1.99103, 29.3734)
+
+[node name="shelf122" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 24.0945)
+
+[node name="shelf123" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05173, 1.99103, 29.3448)
+
+[node name="shelf124" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 24.0659)
+
+[node name="shelf125" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 25.8816)
+
+[node name="shelf126" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 25.853)
+
+[node name="shelf127" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -7.08222, 1.99103, 27.6298)
+
+[node name="shelf128" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -3.05237, 1.99103, 27.6012)
+
+[node name="shelf140" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 11.5747, 1.99103, 10.4192)
+
+[node name="shelf141" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 13.3182, 1.99103, 10.4309)
+
+[node name="shelf142" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4319, 1.99103, 16.8615)
+
+[node name="shelf143" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 11.5826)
+
+[node name="shelf144" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4617, 1.99103, 16.8328)
+
+[node name="shelf145" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 11.5539)
+
+[node name="shelf146" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 13.3696)
+
+[node name="shelf147" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 13.341)
+
+[node name="shelf148" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 15.1179)
+
+[node name="shelf149" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 15.0892)
+
+[node name="shelf150" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4319, 1.99103, 22.2246)
+
+[node name="shelf151" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4617, 1.99103, 22.1959)
+
+[node name="shelf167" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 18.7327)
+
+[node name="shelf168" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 18.7041)
+
+[node name="shelf169" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 20.481)
+
+[node name="shelf170" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 20.4523)
+
+[node name="shelf171" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4319, 1.99103, 29.3734)
+
+[node name="shelf172" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 24.0945)
+
+[node name="shelf173" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4617, 1.99103, 29.3448)
+
+[node name="shelf174" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 24.0659)
+
+[node name="shelf175" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 25.8816)
+
+[node name="shelf176" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 25.853)
+
+[node name="shelf177" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 10.4312, 1.99103, 27.6298)
+
+[node name="shelf178" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, 14.4611, 1.99103, 27.6012)
+
+[node name="shelf80" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -5.69943, 1.99103, -11.0981)
+
+[node name="shelf81" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -3.95588, 1.99103, -11.0863)
+
+[node name="shelf82" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -6.84226, 1.99103, -12.221)
+
+[node name="shelf84" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -2.81241, 1.99103, -12.2497)
+
+[node name="shelf88" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -6.8429, 1.99103, -13.9646)
+
+[node name="shelf89" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(1, 0, 0.000366505, 0, 1, 0, -0.000366505, 0, 1, -2.81305, 1.99103, -13.9933)
+
+[node name="shelf21" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 18.4327, 1.99103, -15.3641)
+
+[node name="shelf36" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 9.64279, 1.99103, -15.3879)
+
+[node name="shelf37" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 11.3863, 1.99103, -15.3761)
+
+[node name="shelf38" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 13.1626, 1.99103, -15.3641)
+
+[node name="shelf39" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 4.3645, 1.99103, -15.3879)
+
+[node name="shelf40" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 6.10805, 1.99103, -15.3761)
+
+[node name="shelf41" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 7.88432, 1.99103, -15.3641)
+
+[node name="shelf55" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 0.863998, 1.99103, -15.3879)
+
+[node name="shelf56" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, 2.60755, 1.99103, -15.3761)
+
+[node name="shelf58" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -2.6625, 1.99103, -15.3761)
+
+[node name="shelf59" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -0.886234, 1.99103, -15.3641)
+
+[node name="shelf57" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -8.71306, 1.99103, -15.3879)
+
+[node name="shelf61" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -6.96951, 1.99103, -15.3761)
+
+[node name="shelf78" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -13.9831, 1.99103, -15.3879)
+
+[node name="shelf79" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -12.2396, 1.99103, -15.3761)
+
+[node name="shelf83" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -10.4633, 1.99103, -15.3641)
+
+[node name="shelf87" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -15.7416, 1.99103, -15.3641)
+
+[node name="shelf90" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -19.3712, 1.99103, -15.3879)
+
+[node name="shelf91" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -17.6276, 1.99103, -15.3761)
+
+[node name="shelf92" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -22.8977, 1.99103, -15.3761)
+
+[node name="shelf93" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-0.00673693, 0, -0.999977, 0, 1, 0, 0.999977, 0, -0.00673693, -21.1214, 1.99103, -15.3641)
+
+[node name="shelf105" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3074, 1.99103, 14.0355)
+
+[node name="shelf106" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3069, 1.99103, 15.7511)
+
+[node name="shelf129" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3065, 1.99103, 17.4857)
+
+[node name="shelf130" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.306, 1.99103, 19.2197)
+
+[node name="shelf131" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3056, 1.99103, 20.9633)
+
+[node name="shelf132" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3051, 1.99103, 22.7396)
+
+[node name="shelf133" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3047, 1.99103, 24.5011)
+
+[node name="shelf134" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3042, 1.99103, 26.2774)
+
+[node name="shelf135" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3037, 1.99103, 28.0622)
+
+[node name="shelf136" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3092, 1.99103, 7.05989)
+
+[node name="shelf137" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3088, 1.99103, 8.77547)
+
+[node name="shelf138" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3083, 1.99103, 10.5101)
+
+[node name="shelf139" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(-1, 0, 0.000261696, 0, 1, 0, -0.000261696, 0, -1, 24.3079, 1.99103, 12.2441)
+
+[node name="shelf152" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 14.0523, 1.99103, 29.4207)
+
+[node name="shelf154" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 10.5325, 1.99103, 29.3961)
+
+[node name="shelf155" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 15.8108, 1.99103, 29.3975)
+
+[node name="shelf156" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 19.4404, 1.99103, 29.4221)
+
+[node name="shelf157" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 17.6969, 1.99103, 29.4099)
+
+[node name="shelf158" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 22.9669, 1.99103, 29.4113)
+
+[node name="shelf159" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 21.1907, 1.99103, 29.3989)
+
+[node name="shelf160" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 1.77493, 1.99103, 29.4207)
+
+[node name="shelf161" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 0.0313797, 1.99103, 29.4085)
+
+[node name="shelf162" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, -1.74489, 1.99103, 29.3961)
+
+[node name="shelf163" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 3.53341, 1.99103, 29.3975)
+
+[node name="shelf164" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 7.163, 1.99103, 29.4221)
+
+[node name="shelf165" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 5.41945, 1.99103, 29.4099)
+
+[node name="shelf166" parent="obstacles" instance=ExtResource("1_4w0b6")]
+transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.00699862, 8.91324, 1.99103, 29.3989)
+
+[node name="thirdPersonCam" parent="." node_paths=PackedStringArray("Cart") instance=ExtResource("1_hpi38")]
+transform = Transform3D(1, 5.18929e-08, -1.66968e-07, 0, 0.954942, 0.296792, 1.74846e-07, -0.296792, 0.954942, 20.3139, 2.87488, 25.2905)
+Cart = NodePath("../Cart")
+dist = 1.3
+height = 0.7
+
+[node name="Cart" parent="." instance=ExtResource("2_qdsev")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 20.2929, 2.15689, 23.8411)

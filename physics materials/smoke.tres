@@ -1,0 +1,18 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://dbcklesgdfhlw"]
+
+[sub_resource type="Curve" id="Curve_dhnfn"]
+_data = [Vector2(0, 0.18591), 0.0, 3.3242, 0, 0, Vector2(0.418367, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.17955), -4.57078, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_rlaci"]
+curve = SubResource("Curve_dhnfn")
+
+[resource]
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, 0, 1)
+spread = 1.0
+initial_velocity_max = 0.3
+gravity = Vector3(0, 10, 0)
+scale_min = 0.05
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_rlaci")

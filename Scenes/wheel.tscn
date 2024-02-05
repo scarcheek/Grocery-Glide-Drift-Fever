@@ -1,15 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://tfouulew7ry6"]
+[gd_scene load_steps=5 format=3 uid="uid://tfouulew7ry6"]
 
 [ext_resource type="Script" path="res://Scripts/Wheel.cs" id="1_fqk52"]
+[ext_resource type="Material" uid="uid://dbcklesgdfhlw" path="res://physics materials/smoke.tres" id="2_5n53r"]
+[ext_resource type="PackedScene" uid="uid://mba0mwtmid16" path="res://Assets/3DModels/wheel.glb" id="2_311f0"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_d1wvs"]
-size = Vector3(0.09, 0.11, 0.1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1cfey"]
+[sub_resource type="SphereMesh" id="SphereMesh_hob3i"]
 
 [node name="Wheel" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
-mesh = SubResource("BoxMesh_d1wvs")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_1cfey")
 script = ExtResource("1_fqk52")
+
+[node name="smoke" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, -2.91038e-11, -0.0624923, 0.080904)
+emitting = false
+amount = 10
+lifetime = 0.16
+process_material = ExtResource("2_5n53r")
+draw_pass_1 = SubResource("SphereMesh_hob3i")
+
+[node name="wheel" parent="." instance=ExtResource("2_311f0")]
+transform = Transform3D(-0.4, 0, -6.03983e-08, 0, 0.4, 0, 6.03983e-08, 0, -0.4, -0.000218002, -0.0552369, 0)

@@ -15,9 +15,18 @@ run/main_scene="res://Scenes/test world.tscn"
 config/features=PackedStringArray("4.2", "C#")
 config/icon="res://icon.png"
 
+[display]
+
+window/stretch/scale_mode="integer"
+
 [dotnet]
 
 project/assembly_name="Shopping Cart Racer"
+
+[filesystem]
+
+import/blender/enabled.android=true
+import/blender/enabled.web=true
 
 [input]
 
