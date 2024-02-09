@@ -7,31 +7,39 @@ using Godot.NativeInterop;
 
 public partial class Cart : RigidBody3D
 {
-	[Export] public MeshInstance3D[] wheels;
-	[Export] private int minDrift = 2, minBoost = 200, fixedTippingThreshold = 10; //minDrift is the minimum of DriftV for driftScore to build up, minBoost is the minimum driftScore to get a driftBoost
-	[Export] PhysicsMaterial slipperyMaterial, ragdollMaterial;
-	[Export] int weightMax = 100;
-	private int thrust = 200; //thrust force
+	private int thrust = 100; //thrust force
 	private int angular = 20; //turning force
+	[Export] public MeshInstance3D[] wheels;
+	[Export] private int minDrift = 2, fixedTippingThreshold; //minDrift is the minimum of DriftV for driftScore to build up
+	[Export] int weightMax = 100;
 	public float driftV = 0;
-	[Export] private int weight = 100;
-	private float driftScore = 0, tippingThreshold = 7 , driftBoost = 1; //driftScore is accumulated through drifting, tippingThreshold is the minimum amount of DriftV that causes the cart to tip
+	[Export] private int weight = 0;
+	private float driftScore = 0, tippingThreshold, driftBoost = 1, minBoost; //driftScore is accumulated through drifting, tippingThreshold is the minimum amount of DriftV that causes the cart to tip, minBoost is the minimum driftScore to get a driftBoost
 	public bool isDrifting = false, ragdoll = false;
+	[Export] PhysicsMaterial slipperyMaterial, ragdollMaterial;
 
+    public override void _Ready()
+    {
+        minBoost = thrust*0.75f;
+		fixedTippingThreshold = thrust/11;
+		tippingThreshold = fixedTippingThreshold;
+		Debug.WriteLine(fixedTippingThreshold);
+    }
 
-	public override void _Process(double delta)
+    public override void _Process(double delta)
 	{
-		float weightPenalty = ((2 - (weight / weightMax)) / 2f);
+		float weightPenalty = ((3 - (weight / weightMax)) / 3f);
 
 		if (!ragdoll) //steering is disabled while ragdolling
 		{
 			if (Input.IsActionPressed("forward"))
 			{
-				ApplyForce(GlobalTransform.Basis.Z * thrust * weightPenalty * driftBoost * (float)delta*75);
+				ApplyForce(GlobalTransform.Basis.Z * thrust * weightPenalty * driftBoost * (float)delta*120);
 			}
 			if (Input.IsActionPressed("brake"))
 			{
-				ApplyForce(-GlobalTransform.Basis.Z * thrust * weightPenalty * driftBoost * (float)delta*30);
+				Debug.WriteLine("brake");
+				ApplyForce(-GlobalTransform.Basis.Z * thrust * weightPenalty * driftBoost * (float)delta*75);
 			}
 			if (Input.IsActionPressed("steer_r"))
 			{
@@ -50,6 +58,11 @@ public partial class Cart : RigidBody3D
 			}
 		}
 
+		if (Input.IsActionJustPressed("ui_cancel")){
+			GetTree().Quit();
+		}
+		
+
 		//interpolate tipping threshold and drift boost to normal value
 		tippingThreshold = (float)(tippingThreshold + (fixedTippingThreshold - tippingThreshold) * 0.4 * delta); 
 		driftBoost = (float)(driftBoost + (1 - driftBoost) * 0.4 * delta);
@@ -58,13 +71,13 @@ public partial class Cart : RigidBody3D
 		driftV = driftValue();
 		checkDrifting();
 		check_tipping();
-		addDriftScore(delta);
-		//Debug.WriteLine(driftScore);
+		addDriftScore(delta, weightPenalty);
+		Debug.WriteLine(driftScore);
 	}
 
 	private float driftValue()
 	{
-		return (float) Godot.Mathf.Abs((LinearVelocity.Dot(GlobalTransform.Basis.X.Normalized()) * ((0.5 + (weight / weightMax)) / 1.5f)));
+		return (float) Godot.Mathf.Abs((LinearVelocity.Dot(GlobalTransform.Basis.X.Normalized()) * ((1 + (weight / weightMax)) / 2f)));
 	}
 
 	private void check_tipping(){
@@ -82,14 +95,14 @@ public partial class Cart : RigidBody3D
 		}
 	}
 
-	private void addDriftScore(double delta){
+	private void addDriftScore(double delta, float weightPenalty){
 		if (isDrifting){
-			driftScore += (float)(driftV*delta*20);
+			driftScore += (float)(driftV*delta*10*weightPenalty);
 		}
 		else{
 			if (driftScore > minBoost){
-				//Debug.WriteLine("boosted");
-				driftBoost += Mathf.Min(driftScore/400,2);
+				Debug.WriteLine("boosted");
+				driftBoost += Mathf.Min(driftScore/150,1);
 				tippingThreshold += Mathf.Min(driftScore/250,5);
 			}
 			driftScore = 0;

@@ -17,16 +17,11 @@ config/icon="res://icon.png"
 
 [display]
 
-window/stretch/scale_mode="integer"
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
 project/assembly_name="Shopping Cart Racer"
-
-[filesystem]
-
-import/blender/enabled.android=true
-import/blender/enabled.web=true
 
 [input]
 
