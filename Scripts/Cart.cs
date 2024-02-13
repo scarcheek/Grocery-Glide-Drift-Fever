@@ -72,7 +72,7 @@ public partial class Cart : RigidBody3D
 		checkDrifting();
 		check_tipping();
 		addDriftScore(delta, weightPenalty);
-		Debug.WriteLine(driftScore);
+		Debug.WriteLine(Engine.GetFramesPerSecond());
 	}
 
 	private float driftValue()

@@ -6,7 +6,7 @@ public partial class Wheel : MeshInstance3D
 {
 
 	private Cart cart;
-	private Vector3 velocityDir;
+	private Vector3 velocityDir, velocity2D;
 	private GpuParticles3D smoke;
 
 	public float driftAngleThresh = 0.7f;
@@ -17,13 +17,13 @@ public partial class Wheel : MeshInstance3D
 	{
 		cart = GetParent<Cart>();
 		smoke = GetChild<GpuParticles3D>(0);
-		velocityDir = GlobalPosition + new Vector3(cart.LinearVelocity.X, 0, cart.LinearVelocity.Z);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		velocityDir = GlobalPosition + new Vector3(cart.LinearVelocity.X, 0, cart.LinearVelocity.Z);
+		velocity2D = new Vector3(cart.LinearVelocity.X, 0, cart.LinearVelocity.Z);
+		velocityDir = GlobalPosition + velocity2D;
 		LookInVelocityDirection();
 
 		
@@ -37,7 +37,7 @@ public partial class Wheel : MeshInstance3D
 
 	private void LookInVelocityDirection()
 	{
-		if (cart.LinearVelocity.Length() > 0.1 && GlobalPosition != velocityDir)
+		if (velocity2D.Length() > 0.1 && GlobalPosition != velocityDir)
 		{
 			LookAt(velocityDir);
 		}

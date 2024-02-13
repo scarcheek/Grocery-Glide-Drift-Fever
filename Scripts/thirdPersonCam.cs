@@ -18,6 +18,7 @@ public partial class thirdPersonCam : Camera3D
 		Godot.Vector3 globalCamreaPos = Cart.Position + new Godot.Vector3(CartDir.X*dist,height,CartDir.Z*dist);
 		Godot.Vector3 cameraMovement= globalCamreaPos - Position;
 		Position = Position + (cameraMovement.Normalized()*(float)(cameraMovement.Length()*10*delta));
+		//Position = globalCamreaPos;
 		LookAt(Cart.Position + new Godot.Vector3(0,0.5f,0));
 	}
 }
