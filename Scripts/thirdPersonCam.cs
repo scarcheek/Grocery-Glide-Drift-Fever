@@ -12,7 +12,7 @@ public partial class thirdPersonCam : Camera3D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		Godot.Vector3 CartDir = -Cart.GlobalTransform.Basis.Z;
 		Godot.Vector3 globalCamreaPos = Cart.Position + new Godot.Vector3(CartDir.X*dist,height,CartDir.Z*dist);
