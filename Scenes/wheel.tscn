@@ -1,10 +1,37 @@
-[gd_scene load_steps=5 format=3 uid="uid://tfouulew7ry6"]
+[gd_scene load_steps=9 format=3 uid="uid://tfouulew7ry6"]
 
 [ext_resource type="Script" path="res://Scripts/Wheel.cs" id="1_fqk52"]
 [ext_resource type="Material" uid="uid://dbcklesgdfhlw" path="res://physics materials/smoke.tres" id="2_5n53r"]
-[ext_resource type="PackedScene" uid="uid://mba0mwtmid16" path="res://Assets/3DModels/wheel.glb" id="2_311f0"]
+[ext_resource type="PackedScene" uid="uid://dkr3r2sgiquoc" path="res://Assets/3DModels/wheel.blend" id="3_4jvi8"]
+[ext_resource type="Material" uid="uid://de70e0db5rtv6" path="res://physics materials/sparks.tres" id="3_d4rr1"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_hob3i"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f0wue"]
+shading_mode = 0
+albedo_color = Color(0.333333, 0.333333, 0.333333, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_7vs45"]
+material = SubResource("StandardMaterial3D_f0wue")
+radius = 0.2
+height = 0.4
+radial_segments = 24
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lltt8"]
+diffuse_mode = 3
+albedo_color = Color(1, 0.835294, 0.458824, 1)
+emission_enabled = true
+emission = Color(0.819608, 0.607843, 0, 1)
+emission_energy_multiplier = 3.21
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0qp3d"]
+material = SubResource("StandardMaterial3D_lltt8")
+flip_faces = true
+top_radius = 0.008
+bottom_radius = 0.002
+height = 0.1
+radial_segments = 4
+rings = 1
+cap_bottom = false
 
 [node name="Wheel" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
@@ -12,12 +39,22 @@ skeleton = NodePath("../..")
 script = ExtResource("1_fqk52")
 
 [node name="smoke" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, -2.91038e-11, -0.0624923, 0.080904)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.91038e-11, -0.0624923, 0.153093)
 emitting = false
-amount = 10
+amount = 30
 lifetime = 0.16
+trail_lifetime = 0.4
 process_material = ExtResource("2_5n53r")
-draw_pass_1 = SubResource("SphereMesh_hob3i")
+draw_pass_1 = SubResource("SphereMesh_7vs45")
 
-[node name="wheel" parent="." instance=ExtResource("2_311f0")]
-transform = Transform3D(-0.4, 0, -6.03983e-08, 0, 0.4, 0, 6.03983e-08, 0, -0.4, -0.000218002, -0.0552369, 0)
+[node name="sparks" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.91038e-11, -0.0594663, 0.027525)
+emitting = false
+amount = 40
+lifetime = 0.02
+fixed_fps = 60
+process_material = ExtResource("3_d4rr1")
+draw_pass_1 = SubResource("CylinderMesh_0qp3d")
+
+[node name="wheel" parent="." instance=ExtResource("3_4jvi8")]
+transform = Transform3D(-0.9, 0, -7.86805e-08, 0, 0.9, 0, 7.86805e-08, 0, -0.9, 0, 0.0539026, 0)

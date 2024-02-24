@@ -3,8 +3,8 @@
 [ext_resource type="PhysicsMaterial" uid="uid://dwqwcitncrxt5" path="res://physics materials/slippery.tres" id="1_e3lua"]
 [ext_resource type="Script" path="res://Scripts/Cart.cs" id="2_mfh7l"]
 [ext_resource type="PhysicsMaterial" uid="uid://vnwm8hjlh2we" path="res://physics materials/ragdoll.tres" id="3_5cvuw"]
-[ext_resource type="PackedScene" uid="uid://g0j3ffjbeuby" path="res://Assets/3DModels/shopping cart.blend" id="5_ekwdo"]
 [ext_resource type="PackedScene" uid="uid://tfouulew7ry6" path="res://Scenes/wheel.tscn" id="5_moa8g"]
+[ext_resource type="PackedScene" uid="uid://b5gcdtoda6mew" path="res://Assets/3DModels/shopping cart.glb" id="6_7cj3n"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pdpqd"]
 points = PackedVector3Array(0.3, 0.5, 0.55, -0.3, -0.5, -0.55, 0.3, -0.5, -0.55, 0.3, 0.5, -0.55, 0.3, -0.5, 0.55, -0.3, 0.5, 0.55, -0.3, -0.5, 0.55, -0.3, 0.5, -0.55)
@@ -19,21 +19,22 @@ wheels = [null, null, null, null]
 slipperyMaterial = ExtResource("1_e3lua")
 ragdollMaterial = ExtResource("3_5cvuw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="cartCollision" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.999999, 0, 1.11759e-08, 0, 1, 0, -1.11759e-08, 0, 0.999999, 0, 0.00491333, 0)
+visible = false
 shape = SubResource("ConvexPolygonShape3D_pdpqd")
 
 [node name="Wheel" parent="." instance=ExtResource("5_moa8g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.185006, -0.439087, 0.324695)
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74228e-08, 0, -0.999999, -0.185006, -0.439087, 0.324695)
 
 [node name="Wheel2" parent="." instance=ExtResource("5_moa8g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.185006, -0.439087, -0.208623)
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74228e-08, 0, -0.999999, -0.185006, -0.439087, -0.208623)
 
 [node name="Wheel3" parent="." instance=ExtResource("5_moa8g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.182374, -0.439087, 0.324695)
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74228e-08, 0, -0.999999, 0.182374, -0.439087, 0.324695)
 
 [node name="Wheel4" parent="." instance=ExtResource("5_moa8g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.182374, -0.439087, -0.208624)
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74228e-08, 0, -0.999999, 0.182374, -0.439087, -0.208624)
 
-[node name="shopping cart2" parent="." instance=ExtResource("5_ekwdo")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.00352135, -0.378648, -0.0810866)
+[node name="shopping cart" parent="." instance=ExtResource("6_7cj3n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.376118, -0.092)

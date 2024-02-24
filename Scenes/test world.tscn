@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://oss3r33xipk7"]
+[gd_scene load_steps=11 format=3 uid="uid://oss3r33xipk7"]
 
 [ext_resource type="PackedScene" uid="uid://bmnxmb141f2v3" path="res://Scenes/shelf.tscn" id="1_4w0b6"]
+[ext_resource type="Texture2D" uid="uid://ds8c86kv84a0y" path="res://Assets/3DModels/floor.png" id="1_54055"]
 [ext_resource type="PackedScene" uid="uid://dgq6ixctkuawe" path="res://Scenes/third_person_cam.tscn" id="1_hpi38"]
 [ext_resource type="PackedScene" uid="uid://bmd677ycvk3to" path="res://Scenes/cart.tscn" id="2_qdsev"]
 
@@ -20,18 +21,9 @@ glow_enabled = true
 [sub_resource type="PlaneMesh" id="1"]
 size = Vector2(120, 120)
 
-[sub_resource type="Gradient" id="Gradient_37skc"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_5d7y1"]
-noise_type = 5
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_socxw"]
-color_ramp = SubResource("Gradient_37skc")
-noise = SubResource("FastNoiseLite_5d7y1")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1o62k"]
-albedo_color = Color(0.121569, 1, 1, 1)
-albedo_texture = SubResource("NoiseTexture2D_socxw")
+albedo_texture = ExtResource("1_54055")
+uv1_scale = Vector3(200, 200, 200)
 
 [sub_resource type="BoxShape3D" id="2"]
 size = Vector3(120, 0.1, 120)
@@ -569,8 +561,10 @@ transform = Transform3D(0.00699862, 0, 0.999975, 0, 1, 0, -0.999975, 0, 0.006998
 transform = Transform3D(1, 5.18929e-08, -1.66968e-07, 0, 0.954942, 0.296792, 1.74846e-07, -0.296792, 0.954942, 20.3139, 2.87488, 25.2905)
 Cart = NodePath("../Cart")
 dist = 1.5
-height = 0.5
+height = 0.7
 
-[node name="Cart" parent="." instance=ExtResource("2_qdsev")]
+[node name="Cart" parent="." node_paths=PackedStringArray("wheels", "camera") instance=ExtResource("2_qdsev")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 20.2929, 2.15689, 23.8411)
+wheels = [null, null, null, null]
 weight = 100
+camera = NodePath("../thirdPersonCam")

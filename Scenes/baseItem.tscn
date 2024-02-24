@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://m0kn6drkpi4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cscog"]
+rough = true
+bounce = 0.6
+
+[sub_resource type="SphereMesh" id="SphereMesh_inowk"]
+radius = 0.05
+height = 0.1
+radial_segments = 12
+rings = 6
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wufu6"]
+points = PackedVector3Array(0.0420459, 0.0226688, 0.00423693, -0.0473996, -0.0136623, -0.000287302, -0.045592, -0.0166076, -0.00179074, 0.0027424, -0.0136504, 0.0467513, 0.0193312, -0.0437849, -0.0123644, -0.0109104, 0.0440155, -0.0200134, -0.000287302, -0.0136707, -0.0473957, -0.0198617, 0.0316106, 0.0328302, 0.0238857, 0.0135934, -0.0410769, 0.0467507, -0.0136503, 0.00274236, -0.0215023, -0.0439316, 0.00576361, -0.0413119, 0.0121484, -0.0245996, 0.0193799, 0.0317846, 0.0330118, 0.0193799, -0.0317846, 0.0330118, -0.0244623, -0.0135851, 0.0405057, -0.020091, -0.0304634, -0.0337927, 0.0165044, 0.0458015, -0.00639423, -0.0351515, 0.0303184, 0.0163857, 0.0420968, -0.012102, -0.0229908, 0.0405331, 0.0120879, 0.0254182, -0.0245996, 0.0121484, -0.0413119, -0.00946558, 0.0458677, 0.0149975, -0.00179768, -0.0440067, 0.0224697, 0.00274236, 0.0136503, 0.0467507, -0.0426592, 0.0120986, 0.0208849, 0.0193834, -0.0287555, -0.0350992, 0.0328252, 0.0316152, -0.0198588, -0.000287302, 0.0318505, -0.0382027, 0.02541, -0.0120979, 0.0405347, -0.0333752, -0.0300838, 0.0207578, 0.0330027, -0.0317846, 0.019389, -0.0335264, 0.0317266, -0.018411)
+
+[node name="BaseItem" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_cscog")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_inowk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_wufu6")

@@ -7,7 +7,7 @@ public partial class Wheel : MeshInstance3D
 
 	private Cart cart;
 	private Vector3 velocityDir, velocity2D;
-	private GpuParticles3D smoke;
+	private GpuParticles3D smoke,sparks;
 
 	public float driftAngleThresh = 0.7f;
 	public float driftVelocityThresh = 7f;
@@ -17,6 +17,7 @@ public partial class Wheel : MeshInstance3D
 	{
 		cart = GetParent<Cart>();
 		smoke = GetChild<GpuParticles3D>(0);
+		sparks = GetChild<GpuParticles3D>(1);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,17 +30,20 @@ public partial class Wheel : MeshInstance3D
 		
 		if (cart.isDrifting){
 			smoke.Emitting = true;
+			sparks.Emitting =true;
 		}else{
 			smoke.Emitting = false;
+			sparks.Emitting =false;
 		}
 		
 	}
 
 	private void LookInVelocityDirection()
 	{
-		if (velocity2D.Length() > 0.1 && GlobalPosition != velocityDir)
+		if (velocity2D.Length() > 0.1)
 		{
-			LookAt(velocityDir);
+				LookAt(velocityDir);
+				Rotation = new Vector3(0,Rotation.Y,0);
 		}
 	}
 }
