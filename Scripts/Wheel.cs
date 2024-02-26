@@ -7,7 +7,7 @@ public partial class Wheel : MeshInstance3D
 
 	private Cart cart;
 	private Vector3 velocityDir, velocity2D;
-	private GpuParticles3D smoke,sparks;
+	private GpuParticles3D smoke, sparks;
 
 	public float driftAngleThresh = 0.7f;
 	public float driftVelocityThresh = 7f;
@@ -21,34 +21,43 @@ public partial class Wheel : MeshInstance3D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		velocity2D = new Vector3(cart.LinearVelocity.X, 0, cart.LinearVelocity.Z);
 		velocityDir = GlobalPosition + velocity2D;
 		LookInVelocityDirection();
 
-		
-		if (cart.isDrifting){
+
+		if (cart.isDrifting)
+		{
 			smoke.Emitting = true;
-			sparks.Emitting =true;
-		}else{
+		}
+		else
+		{
 			smoke.Emitting = false;
+		}
+		if(cart.boostReady)
+		{
+			sparks.Emitting =true;
+		}
+		else
+		{
 			sparks.Emitting =false;
 		}
-		
+
 	}
 
 	private void LookInVelocityDirection()
 	{
 		if (velocity2D.Length() > 0.1)
 		{
-				LookAt(velocityDir);
-				Rotation = new Vector3(0,Rotation.Y,0);
+			LookAt(velocityDir);
+			Rotation = new Vector3(0, Rotation.Y, 0);
 		}
 	}
 }
-	/*
-		float angleToCart = GlobalTransform.Basis.Z.AngleTo(cart.GlobalTransform.Basis.Z);
-		if (cart.LinearVelocity.Dot(cart.GlobalTransform.Basis.X.Normalized()) > driftVelocityThresh && angleToCart < Math.PI - driftAngleThresh && angleToCart > driftAngleThresh) {
-	*/
+/*
+	float angleToCart = GlobalTransform.Basis.Z.AngleTo(cart.GlobalTransform.Basis.Z);
+	if (cart.LinearVelocity.Dot(cart.GlobalTransform.Basis.X.Normalized()) > driftVelocityThresh && angleToCart < Math.PI - driftAngleThresh && angleToCart > driftAngleThresh) {
+*/
 

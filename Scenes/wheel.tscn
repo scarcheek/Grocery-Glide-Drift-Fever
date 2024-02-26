@@ -7,7 +7,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f0wue"]
 shading_mode = 0
-albedo_color = Color(0.333333, 0.333333, 0.333333, 1)
+albedo_color = Color(0.458824, 0.458824, 0.458824, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_7vs45"]
 material = SubResource("StandardMaterial3D_f0wue")
@@ -40,7 +40,6 @@ script = ExtResource("1_fqk52")
 
 [node name="smoke" type="GPUParticles3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.91038e-11, -0.0624923, 0.153093)
-emitting = false
 amount = 30
 lifetime = 0.16
 trail_lifetime = 0.4
